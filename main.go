@@ -15,7 +15,7 @@ const version = "v.1.0.0"
 
 func main() {
 
-	fmt.Printf("yt-dl %s\n", version)
+	fmt.Printf("m3u8-dl %s\n", version)
 
 	var (
 		inputUrl   string
