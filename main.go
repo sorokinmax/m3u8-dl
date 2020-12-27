@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -10,7 +11,11 @@ import (
 	"strings"
 )
 
+const version = "v.1.0.0"
+
 func main() {
+
+	fmt.Printf("yt-dl %s\n", version)
 
 	var (
 		inputUrl   string
