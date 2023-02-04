@@ -4,14 +4,14 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
 	"strings"
 )
 
-const version = "v.1.0.0"
+const version = "v.1.0.1"
 
 func main() {
 
@@ -75,17 +75,23 @@ func main() {
 	}
 }
 
-//downloadFilePart download file part from server
+// downloadFilePart download file part from server
 func downloadFilePart(url string) ([]byte, error) {
 	result := make([]byte, 0)
+	var err error
+	var resp *http.Response
 
-	resp, err := http.Get(url)
-	if err != nil {
-		return result, err
-	}
-
-	if result, err = ioutil.ReadAll(resp.Body); err != nil {
-		return result, err
+	for i := 1; i < 5; i++ {
+		if i > 1 {
+			fmt.Println("===================RETRY===================")
+		}
+		resp, err = http.Get(url)
+		if err == nil {
+			result, err = io.ReadAll(resp.Body)
+			if err == nil {
+				return result, nil
+			}
+		}
 	}
 
 	return result, err
